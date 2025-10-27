@@ -40,9 +40,9 @@ public class MediaFinalApp extends Application {
         VBox painelResultado = new VBox();
         painelResultado.setPadding(new Insets(0, 0, 10, 10));
         Label labelAluno = new Label("Nome do Aluno:");
-        Label labelMedia = new Label("Média Final:");
+        Label labelMediafinal = new Label("Média Final:");
         Label labelSituacao = new Label("Situação:");
-        painelResultado.getChildren().addAll(labelAluno, labelMedia, labelSituacao);
+        painelResultado.getChildren().addAll(labelAluno, labelMediafinal, labelSituacao);
 
         //painel de botoes
         VBox painelDeBotoes = new VBox();
@@ -93,6 +93,47 @@ public class MediaFinalApp extends Application {
         stage.show();
 
         //eventos de click dos botoes
+        //função lambda ou arrow function, função de seta.
+        buttonCalcularMedia.setOnAction(click ->{
+            System.out.println("Botão clicado!");
+            String nomeDigitado = textFieldNome.getText();
+            labelAluno.setText("Nome do Aluno: " + nomeDigitado);
 
+            // CALCULAR MEDIA
+            //OBTER AS NOTAS
+            //transforma uma string em double
+            String nota1Str = textFieldNota1.getText();
+            double nota1 = Double.parseDouble(nota1Str);
+
+            String nota2Str = textFieldNota2.getText();
+            double nota2 = Double.parseDouble(nota2Str);
+
+            String nota3Str = textFieldNota3.getText();
+            double nota3 = Double.parseDouble(nota3Str);
+
+            String nota4Str = textFieldNota4.getText();
+            double nota4 = Double.parseDouble(nota4Str);
+
+            double mediaFinal = (nota1 + nota2 + nota3 + nota4) / 4;
+
+            //formatação para 2 zeros após a virgula
+            String mediaFinalStr = String.format("%.2f", mediaFinal);
+            labelMediafinal.setText("Média final: " + mediaFinalStr);
+
+            //Realizando logica para verificar a situação
+            String situacao = "";
+
+            if (mediaFinal < 4){
+                situacao = "REPROVADO";
+            } else if (mediaFinal >= 6) {
+                situacao = "APROVADO";
+            } else  {
+                situacao = "RECUPERAÇÃO";
+            }
+
+            labelSituacao.setText("Situação: " + situacao);
+
+
+        });
     }
 }
