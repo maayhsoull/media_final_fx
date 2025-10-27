@@ -3,12 +3,12 @@ package br.senai.sp.jandira.media_final;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class MediaFinalApp extends Application {
 
@@ -101,20 +101,40 @@ public class MediaFinalApp extends Application {
 
             // CALCULAR MEDIA
             //OBTER AS NOTAS
+
+            //criar um vetor de notas (array)
+            //Realizando o cleancode, onde diminui uma variavel por um vetor que irá salvar todos os valores.
+            double[] notas = new double[4];
+            String notasStr[] = new String[4];
+
             //transforma uma string em double
-            String nota1Str = textFieldNota1.getText();
-            double nota1 = Double.parseDouble(nota1Str);
+            notasStr[0] = textFieldNota1.getText();
+            notas[0] = Double.parseDouble(notasStr[0]);
 
-            String nota2Str = textFieldNota2.getText();
-            double nota2 = Double.parseDouble(nota2Str);
+            notasStr[1] = textFieldNota2.getText();
+            notas[1] = Double.parseDouble(notasStr[1]);
 
-            String nota3Str = textFieldNota3.getText();
-            double nota3 = Double.parseDouble(nota3Str);
+            notasStr[2] = textFieldNota3.getText();
+            notas[2] = Double.parseDouble(notasStr[2]);
 
-            String nota4Str = textFieldNota4.getText();
-            double nota4 = Double.parseDouble(nota4Str);
+            notasStr[3] = textFieldNota4.getText();
+            notas[3] = Double.parseDouble(notasStr[3]);
 
-            double mediaFinal = (nota1 + nota2 + nota3 + nota4) / 4;
+            //Uso de loop while (enquanto)
+
+            int i = 0;
+
+            double mediaFinal = 0.0;
+
+            while (i < notas.length){
+                mediaFinal = mediaFinal + notas[i];
+                i = i + 1;
+            }
+
+            mediaFinal = mediaFinal / notas.length;
+
+            //Alterado o numero setado para o vetor total. O .length utiliza o tamanho do array.
+            //double mediaFinal = (notas[0] + notas[1] + notas[2] + notas[3]) / notas.length;
 
             //formatação para 2 zeros após a virgula
             String mediaFinalStr = String.format("%.2f", mediaFinal);
@@ -133,7 +153,36 @@ public class MediaFinalApp extends Application {
 
             labelSituacao.setText("Situação: " + situacao);
 
+        });
+
+        //BOTÃO LIMPAR
+        buttonLimpar.setOnAction(click -> {
+            textFieldNome.clear();
+            textFieldNota1.clear();
+            textFieldNota2.clear();
+            textFieldNota3.clear();
+            textFieldNota4.clear();
+
+            labelAluno.setText("Nome do Aluno:");
+            labelMediafinal.setText("Média Final:");
+            labelSituacao.setText("Situação:");
+            textFieldNome.requestFocus();
+        });
+
+        //botão sair
+        buttonSair.setOnAction(click -> {
+            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION,"Confirma a saída?", ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> botaoPressionado = alerta.showAndWait();
+
+            if (botaoPressionado.get() == ButtonType.YES){
+                Alert alerta2 = new Alert(Alert.AlertType.INFORMATION, "Até logo!");
+                alerta2.showAndWait();
+                System.exit(0);
+            }
+
 
         });
+
+
     }
 }
