@@ -127,8 +127,11 @@ public class MediaFinalApp extends Application {
             double mediaFinal = 0.0;
 
             while (i < notas.length){
-                mediaFinal = mediaFinal + notas[i];
-                i = i + 1;
+                //mediaFinal = mediaFinal + notas[i]; adicionando incremento na proxima linha trazer o operador
+                //para antes do sinal de igualdade, assim evita repetições.
+                mediaFinal += notas[i];
+                //i = i + 1; adicionando incremento na proxima linha
+                i++;
             }
 
             mediaFinal = mediaFinal / notas.length;
